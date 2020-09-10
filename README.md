@@ -3,6 +3,8 @@ Infoblox Terraform Module
 
 A Terraform module to provide a Infoblox DDI server in AWS.
 
+![Desktop Picture](/images/1.png)
+
 Module Input Variables
 ----------------------
 
@@ -14,7 +16,7 @@ Module Input Variables
 - `management_ip2` - Second management IP of Infoblox for eth1 and used for the management GUI.
 - `default_tags` - Tags assigned to Infoblox instance.
 - `name_prefix` - Prefix added to name tags of provisioned resources.
-- `admin_password` - Admin password for Infoblox management GUI.
+- `admin_password` - Admin password for Infoblox management GUI. Randomly generated if empty.
 - `remote_console_enabled` - Enables and disables SSH console access for Infoblox.
 - `temp_license` - List of temporary licenses applied to Infoblox server.
 - `include_public_ip` - Adds an EIP to the Infoblox server. true or false.
