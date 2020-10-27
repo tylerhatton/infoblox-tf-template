@@ -1,28 +1,52 @@
-Infoblox Terraform Module
-===========
+# Infoblox Terraform Module
 
 A Terraform module to provide a Infoblox DDI server in AWS.
 
 ![Desktop Picture](/images/1.png)
 
-Module Input Variables
-----------------------
+<!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
+## Requirements
 
-- `aws_region` - AWS Region location of Infoblox server.
-- `vpc_id` - ID of the VPC where the Infoblox server will reside.
-- `key_pair` - Name of key pair to SSH into Infoblox server.
-- `mgmt_subnet_id` - ID of subnet where the Infoblox will reside.
-- `management_ip` - First management IP of Infoblox used for eth0.
-- `management_ip2` - Second management IP of Infoblox for eth1 and used for the management GUI.
-- `default_tags` - Tags assigned to Infoblox instance.
-- `name_prefix` - Prefix added to name tags of provisioned resources.
-- `admin_password` - Admin password for Infoblox management GUI. Randomly generated if empty.
-- `remote_console_enabled` - Enables and disables SSH console access for Infoblox.
-- `temp_license` - List of temporary licenses applied to Infoblox server.
-- `include_public_ip` - Adds an EIP to the Infoblox server. true or false.
+| Name | Version |
+|------|---------|
+| terraform | ~> 0.12 |
+| aws | ~> 2.3 |
 
-Usage
------
+## Providers
+
+| Name | Version |
+|------|---------|
+| random | n/a |
+| template | n/a |
+| aws | ~> 2.3 |
+
+## Inputs
+
+| Name | Description | Type | Default |
+|------|-------------|------|---------|
+| aws\_region | AWS Region location of Infoblox server. | `string` | n/a |
+| vpc\_id | ID of the VPC where the Infoblox server will reside. | `string` | n/a |
+| key\_pair | Name of key pair to SSH into Infoblox server. | `string` | `""` |
+| mgmt\_subnet\_id | ID of subnet where the Infoblox will reside. | `string` | n/a |
+| management\_ip | ID of subnet where the Infoblox will reside. | `string` | n/a |
+| management\_ip2 | Second management IP of Infoblox for eth1 and used for the management GUI. | `string` | n/a |
+| default\_tags | Tags assigned to Infoblox instance. | `map` | `{}` |
+| name\_prefix | Prefix added to name tags of provisioned resources. | `string` | `""` |
+| admin\_password | Admin password for Infoblox management GUI. Randomly generated if empty. | `string` | `""` |
+| remote\_console\_enabled | Enables and disables SSH console access for Infoblox. | `string` | `"y"` |
+| temp\_license | List of temporary licenses applied to Infoblox server. | `string` | `"cloud vnios dns grid"` |
+| include\_public\_ip | n/a | `bool` | `false` |
+
+## Outputs
+
+| Name | Description |
+|------|-------------|
+| infoblox\_mgmt\_ip | The public IP address of the Infoblox mgmt console. |
+| infoblox\_admin\_password | The admin password for the Infoblox mgmt console. |
+
+<!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
+
+## Usage
 
 ```hcl
 module "infoblox" {
@@ -41,15 +65,6 @@ module "infoblox" {
 }
 ```
 
-
-Outputs
-=======
-
- - `infoblox_mgmt_ip` - Public IP of Infoblox server.
- - `infoblox_admin_password` - Admin password for Infoblox management GUI.
-
-
-Authors
-=======
+## Authors
 
 tyler.hatton@wwt.com

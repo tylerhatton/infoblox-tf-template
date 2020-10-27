@@ -1,5 +1,14 @@
+terraform {
+  required_version = "~> 0.12"
+}
+
+provider "aws" {
+  version = "~> 2.3"
+  region  = var.aws_region
+}
+
 resource "random_password" "admin_password" {
-  length = 16
+  length  = 16
   special = false
 }
 
@@ -8,7 +17,7 @@ data "aws_ami" "latest-infoblox-image" {
   owners      = ["057670693668"]
 
   filter {
-    name = "name"
+    name   = "name"
     values = ["Infoblox NIOS 8.2.1 359366 CP-V800 BYOL"]
   }
 
@@ -20,7 +29,7 @@ data "aws_ami" "latest-infoblox-image" {
 
 # User Data Template
 data "template_file" "user_data" {
-  template = "${file("${path.module}/user_data.tpl")}"
+  template = "${file("${path.module}/templates/user_data.tpl")}"
 
   vars = {
     admin_password         = var.admin_password != "" ? var.admin_password : random_password.admin_password.result
@@ -31,10 +40,10 @@ data "template_file" "user_data" {
 
 # EC2 Instances
 resource "aws_instance" "infoblox" {
-  ami                  = data.aws_ami.latest-infoblox-image.id
-  instance_type        = "c4.large"
-  key_name             = var.key_pair != "" ? var.key_pair : null
-  user_data            = data.template_file.user_data.rendered
+  ami           = data.aws_ami.latest-infoblox-image.id
+  instance_type = "c4.large"
+  key_name      = var.key_pair != "" ? var.key_pair : null
+  user_data     = data.template_file.user_data.rendered
 
   network_interface {
     network_interface_id = aws_network_interface.infoblox_mgmt.id
@@ -51,17 +60,17 @@ resource "aws_instance" "infoblox" {
 
 # Network Interfaces
 resource "aws_network_interface" "infoblox_mgmt" {
-  subnet_id                   = var.mgmt_subnet_id
-  security_groups             = [aws_security_group.infoblox_mgmt_sg.id]
-  private_ips                 = [var.management_ip]
+  subnet_id       = var.mgmt_subnet_id
+  security_groups = [aws_security_group.infoblox_mgmt_sg.id]
+  private_ips     = [var.management_ip]
 
   tags = merge(map("Name", "${var.name_prefix}infoblox_mgmt"), var.default_tags)
 }
 
 resource "aws_network_interface" "infoblox_mgmt2" {
-  subnet_id                   = var.mgmt_subnet_id
-  security_groups             = [aws_security_group.infoblox_mgmt_sg.id]
-  private_ips                 = [var.management_ip2]
+  subnet_id       = var.mgmt_subnet_id
+  security_groups = [aws_security_group.infoblox_mgmt_sg.id]
+  private_ips     = [var.management_ip2]
 
   tags = merge(map("Name", "${var.name_prefix}infoblox_mgmt2"), var.default_tags)
 }
