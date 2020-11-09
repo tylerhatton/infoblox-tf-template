@@ -1,12 +1,3 @@
-terraform {
-  required_version = "~> 0.12"
-}
-
-provider "aws" {
-  version = "~> 2.3"
-  region  = var.aws_region
-}
-
 resource "random_password" "admin_password" {
   length  = 16
   special = false
@@ -29,7 +20,7 @@ data "aws_ami" "latest-infoblox-image" {
 
 # User Data Template
 data "template_file" "user_data" {
-  template = "${file("${path.module}/templates/user_data.tpl")}"
+  template = file("${path.module}/templates/user_data.tpl")
 
   vars = {
     admin_password         = var.admin_password != "" ? var.admin_password : random_password.admin_password.result

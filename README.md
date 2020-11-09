@@ -9,22 +9,23 @@ A Terraform module to provide a Infoblox DDI server in AWS.
 
 | Name | Version |
 |------|---------|
-| terraform | ~> 0.12 |
-| aws | ~> 2.3 |
+| terraform | >= 0.12.25 |
+| aws | >= 2.68 |
+| random | >= 2.3 |
+| template | >= 2.1 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| random | n/a |
-| template | n/a |
-| aws | ~> 2.3 |
+| random | >= 2.3 |
+| template | >= 2.1 |
+| aws | >= 2.68 |
 
 ## Inputs
 
 | Name | Description | Type | Default |
 |------|-------------|------|---------|
-| aws\_region | AWS Region location of Infoblox server. | `string` | n/a |
 | vpc\_id | ID of the VPC where the Infoblox server will reside. | `string` | n/a |
 | key\_pair | Name of key pair to SSH into Infoblox server. | `string` | `""` |
 | mgmt\_subnet\_id | ID of subnet where the Infoblox will reside. | `string` | n/a |
