@@ -52,7 +52,6 @@ A Terraform module to provide a Infoblox DDI server in AWS.
 ```hcl
 module "infoblox" {
   source             = "git@github.com:wwt/infoblox-tf-template.git"
-  aws_region         = "us-west-1"
   key_pair           = "test_key"
   name_prefix        = terraform.workspace
 
